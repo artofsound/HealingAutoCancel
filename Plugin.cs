@@ -4,8 +4,6 @@ using Comfort.Common;
 using EFT;
 using EFT.HealthSystem;
 using System.Reflection;
-using static EFT.Player;
-using System.Collections.Generic;
 using BepInEx.Configuration;
 
 namespace ImprovedSelfcare
