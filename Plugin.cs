@@ -44,12 +44,10 @@ namespace ImprovedSelfcare
 			return typeof(GameWorld).GetMethod("OnGameStarted", BindingFlags.Public | BindingFlags.Instance);
 		}
 
-		private static GameWorld gameWorld;
-
 		[PatchPostfix]
 		static void PostFix()
 		{
-			gameWorld = Singleton<GameWorld>.Instance;
+			GameWorld gameWorld = Singleton<GameWorld>.Instance;
 
 			Globals.SetPlayer(gameWorld.MainPlayer);
 			Globals.SetPlayerHealthController(gameWorld.MainPlayer.PlayerHealthController);
