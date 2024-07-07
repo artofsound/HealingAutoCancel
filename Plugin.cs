@@ -1,4 +1,4 @@
-﻿using Aki.Reflection.Patching;
+﻿using SPT.Reflection.Patching;
 using BepInEx;
 using Comfort.Common;
 using EFT;
@@ -67,7 +67,7 @@ namespace ImprovedSelfcare
 				//There might be a better way to check bleeding status
 				//This works though
 				var effects = Globals.playerHealthController.BodyPartEffects.Effects[bodyPart];
-				bool bleeding = effects.ContainsKey("LightBleeding") || effects.ContainsKey("HeavyBleeding");				
+				bool bleeding = effects.ContainsKey("LightBleeding") || effects.ContainsKey("HeavyBleeding");
 
 				//Feels like this is not working correctly
 				//Autocancel should trigger when medkit runs out
