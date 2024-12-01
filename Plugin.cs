@@ -11,9 +11,9 @@ namespace ImprovedSelfcare
 	public class Globals
 	{
 		public static Player player { get; private set; }
-		public static PlayerHealthController playerHealthController { get; private set; }
+		public static IHealthController playerHealthController { get; private set; }
 		public static void SetPlayer(Player p) => player = p;
-		public static void SetPlayerHealthController(PlayerHealthController controller) => playerHealthController = controller;
+		public static void SetPlayerHealthController(IHealthController controller) => playerHealthController = controller;
 	}
 
 	[BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
@@ -48,16 +48,16 @@ namespace ImprovedSelfcare
 			GameWorld gameWorld = Singleton<GameWorld>.Instance;
 
 			Globals.SetPlayer(gameWorld.MainPlayer);
-			Globals.SetPlayerHealthController(gameWorld.MainPlayer.PlayerHealthController);
+			Globals.SetPlayerHealthController(gameWorld.MainPlayer.HealthController);
 			Globals.playerHealthController.HealthChangedEvent += ActiveHealthController_HealthChangedEvent;
 		}
 
-		private static void ActiveHealthController_HealthChangedEvent(EBodyPart bodyPart, float amount, DamageInfo damageInfo)
+		private static void ActiveHealthController_HealthChangedEvent(EBodyPart bodyPart, float amount, DamageInfoStruct damageInfo)
 		{
 			if (damageInfo.DamageType != EDamageType.Medicine)
 				return;
 
-			MedsClass medkitInHands = Globals.player.TryGetItemInHands<MedsClass>();
+			MedsItemClass medkitInHands = Globals.player.TryGetItemInHands<MedsItemClass>();
 
 			//Try to ignore any healing done by stims and ensure we do not try to cancel fixing a broken limb
 			if (medkitInHands != null && !Globals.playerHealthController.IsBodyPartBroken(bodyPart))
